@@ -1,0 +1,131 @@
+.services-overview {
+    background: var(--bg-primary);
+}
+
+.services-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: end;
+    margin-bottom: 52px;
+}
+
+.services-intro .section-title {
+    max-width: none;
+    font-size: clamp(2rem, 2.7vw, 3rem);
+    line-height: 1.08;
+}
+
+.services-intro .section-subtitle {
+    font-size: .96rem;
+    line-height: 1.75;
+}
+
+.service-page-card .service-card-content {
+    text-align: left;
+}
+
+.service-page-card .service-card-content span {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.service-page-card .service-card-content strong {
+    display: inline-block;
+    margin-top: 20px;
+    color: var(--primary);
+}
+
+.service-process-band {
+    background: var(--bg-secondary);
+}
+
+.process-timeline {
+    position: relative;
+    display: grid;
+    gap: 22px;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.process-timeline::before {
+    content: "";
+    position: absolute;
+    top: 34px;
+    bottom: 34px;
+    left: 34px;
+    width: 2px;
+    background: var(--border-gold);
+}
+
+.process-timeline div {
+    position: relative;
+    display: grid;
+    grid-template-columns: 70px 220px 1fr;
+    gap: 24px;
+    align-items: center;
+    padding: 24px 30px 24px 0;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+}
+
+.process-timeline span {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary);
+    color: var(--gold);
+    font-family: var(--font-heading);
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    z-index: 2;
+}
+
+.process-timeline h3 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.process-timeline p {
+    color: var(--text-tertiary);
+}
+
+@media(max-width: 992px) {
+    .services-intro {
+        grid-template-columns: 1fr;
+    }
+
+    .process-timeline::before {
+        display: none;
+    }
+
+    .process-timeline div {
+        grid-template-columns: 58px 1fr;
+        gap: 18px;
+        padding: 22px;
+    }
+
+    .process-timeline p {
+        grid-column: 2;
+    }
+}
+
+@media(max-width: 520px) {
+    .process-timeline div {
+        grid-template-columns: 1fr;
+    }
+
+    .process-timeline p {
+        grid-column: auto;
+    }
+}

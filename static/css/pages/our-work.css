@@ -1,0 +1,280 @@
+.work-page {
+    background: var(--bg-primary);
+}
+
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.work-testimonials {
+    background: var(--bg-secondary);
+}
+
+.testimonial-carousel {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1120px) 56px;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+}
+
+.testimonial-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.testimonial-card {
+    position: relative;
+    min-height: 100%;
+    background: #fff;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 38px;
+    box-shadow: var(--shadow-md);
+}
+
+.testimonial-quote {
+    position: absolute;
+    right: 30px;
+    bottom: 8px;
+    color: var(--gold-muted);
+    font-family: var(--font-heading);
+    font-size: 150px;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.testimonial-avatar {
+    width: 58px;
+    height: 58px;
+    margin-bottom: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary);
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: 34px;
+    font-weight: 700;
+    border: 5px solid var(--gold-light);
+}
+
+.testimonial-card p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-bottom: 26px;
+}
+
+.testimonial-card h3 {
+    color: var(--primary);
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+
+.testimonial-card span {
+    color: var(--text-tertiary);
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.testimonial-nav {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    font-size: 22px;
+    transition: transform .25s ease, background .25s ease;
+}
+
+.testimonial-nav:hover {
+    background: var(--gold);
+    transform: translateY(-2px);
+}
+
+.testimonial-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.testimonial-dots button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border-gold);
+    transition: width .25s ease, background .25s ease;
+}
+
+.testimonial-dots button.active {
+    width: 34px;
+    border-radius: 999px;
+    background: var(--primary);
+}
+
+.work-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 26px;
+    background: #fff;
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-md);
+}
+
+.work-card::after {
+    content: "NIWASA";
+    position: absolute;
+    right: 22px;
+    bottom: 22px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(94, 107, 86, .92);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+}
+
+.work-card img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+
+.work-card-body {
+    padding: 22px;
+}
+
+.work-card-body span {
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.work-card-body h2 {
+    margin: 12px 0;
+    font-size: 24px;
+}
+
+.work-card-body p {
+    color: var(--text-tertiary);
+    font-size: .92rem;
+    line-height: 1.65;
+}
+
+.work-card-body a {
+    display: inline-block;
+    margin-top: 16px;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: .9rem;
+}
+
+.work-timeline {
+    background: var(--bg-primary);
+}
+
+.work-timeline-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.work-timeline-grid article {
+    position: relative;
+    min-height: 220px;
+    padding: 30px;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
+}
+
+.work-timeline-grid article::before {
+    content: "";
+    position: absolute;
+    top: 56px;
+    left: 72px;
+    right: -21px;
+    height: 2px;
+    background: var(--border-gold);
+    z-index: 0;
+}
+
+.work-timeline-grid article:nth-child(3n)::before,
+.work-timeline-grid article:last-child::before {
+    display: none;
+}
+
+.work-timeline-grid span {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    width: 54px;
+    height: 54px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: 23px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.work-timeline-grid h3 {
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+.work-timeline-grid p {
+    color: var(--text-tertiary);
+    line-height: 1.75;
+}
+
+@media(max-width: 1200px) {
+    .work-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media(max-width: 900px) {
+    .work-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .testimonial-carousel {
+        grid-template-columns: 1fr;
+    }
+
+    .testimonial-pair,
+    .work-timeline-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .work-timeline-grid article::before {
+        display: none;
+    }
+
+    .testimonial-nav {
+        margin: 0 auto;
+    }
+}
+
+@media(max-width: 560px) {
+    .work-grid {
+        grid-template-columns: 1fr;
+    }
+}
