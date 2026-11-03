@@ -14,7 +14,7 @@
 
     target.innerHTML = data.services.map((service) => `
       <a href="${serviceUrl(service.slug)}" class="service-card service-page-card" data-aos="fade-up">
-        <img src="${service.image}" alt="${service.title}" data-fallback-title="${service.title}">
+        <img src="${service.image}" alt="${service.title}" width="800" height="600" loading="lazy" decoding="async" data-fallback-title="${service.title}">
         <div class="service-card-content">
           <span>${service.features.length} design features</span>
           <h3>${service.title}</h3>

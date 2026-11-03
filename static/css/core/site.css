@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700;900&display=swap');
 
 /*
 =================================================================
@@ -28,6 +27,7 @@ Luxury | Glassmorphism | Dark Theme | Gold Accents
 
     --accent:#E8D8BB;
     --gold:#B79B63;
+    --gold-text:#80652F;
     --gold-light:#D8C39A;
     --gold-dark:#9B824C;
     --gold-muted:rgba(183,155,99,.12);
@@ -249,7 +249,7 @@ img {
 .image-fallback svg {
     width: 42px;
     height: 42px;
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .image-fallback span {
@@ -323,7 +323,7 @@ input, textarea, select {
     font-weight: 500;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--gold-text);
     margin-bottom: var(--space-sm);
     display: block;
 }
@@ -340,7 +340,7 @@ input, textarea, select {
 .section-title em,
 .section-title i {
     font-style: italic;
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .section-subtitle {
@@ -357,7 +357,7 @@ input, textarea, select {
 }
 
 /* Text Utilities */
-.text-gold { color: var(--gold); }
+.text-gold { color: var(--gold-text); }
 .text-white { color: var(--text-primary); }
 .text-center { text-align: center; }
 .text-left { text-align: left; }
@@ -828,7 +828,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .mobile-close:hover {
-    color: var(--gold);
+    color: var(--gold-text);
     background: var(--gold-muted);
 }
 
@@ -853,7 +853,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .mobile-nav-link:hover {
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .mobile-nav-dropdown {
@@ -1624,7 +1624,7 @@ h1, h2, h3, h4, h5, h6 {
         HEADING
 ===========================*/
 
-.feature-item h3{
+.feature-item h2{
 
     font-family:'Playfair Display',serif;
 

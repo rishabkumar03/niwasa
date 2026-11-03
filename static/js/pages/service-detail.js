@@ -32,7 +32,7 @@
     target.innerHTML = `
       <section class="service-hero">
         <div class="hero-overlay"></div>
-        <div class="hero-bg"><img src="${service.heroImage || service.image}" alt="${service.title}" loading="eager"></div>
+        <div class="hero-bg"><img src="${service.heroImage || service.image}" alt="${service.title}" width="1600" height="1000" fetchpriority="high" decoding="async"></div>
         <div class="container">
           <div class="hero-content">
             <span class="hero-tag">INTERIOR DESIGN SERVICE</span>
@@ -57,7 +57,7 @@
               const image = featureImages[index] || service.image;
               return `
                 <div class="feature-card">
-                  <img src="${image}" alt="${feature}" data-fallback-title="${feature}" loading="lazy">
+                  <img src="${image}" alt="${feature}" width="800" height="600" data-fallback-title="${feature}" loading="lazy" decoding="async">
                   <div class="feature-card-body">
                     <h3>${feature}</h3>
                     <p>${service.description}</p>

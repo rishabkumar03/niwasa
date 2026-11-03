@@ -53,7 +53,7 @@
 }
 
 .contact-highlights strong {
-    color: var(--gold);
+    color: var(--gold-text);
     font-family: var(--font-heading);
     font-size: 25px;
 }
@@ -77,7 +77,7 @@
 }
 
 .contact-info-card span {
-    color: var(--gold);
+    color: var(--gold-text);
     font-size: .72rem;
     font-weight: 700;
     letter-spacing: 1.5px;
@@ -105,7 +105,7 @@
 
 .contact-visit-heading .page-hero-label {
     margin-bottom: 12px;
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .contact-visit-heading .section-title {

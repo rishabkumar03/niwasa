@@ -301,3 +301,20 @@ window.NIWASA_DATA = {
     }
   ]
 };
+
+// Ask Cloudinary to serve modern, appropriately compressed image formats at a
+// capped width. This keeps the same source photography while avoiding full PNGs.
+(function optimizeCloudinaryImages(value) {
+  if (!value || typeof value !== "object") return;
+  Object.keys(value).forEach(function (key) {
+    const item = value[key];
+    if (typeof item === "string" && item.indexOf("res.cloudinary.com/") !== -1) {
+      value[key] = item.replace(
+        "/image/upload/",
+        "/image/upload/f_auto,q_auto,w_1200,c_limit/"
+      );
+    } else if (item && typeof item === "object") {
+      optimizeCloudinaryImages(item);
+    }
+  });
+})(window.NIWASA_DATA);

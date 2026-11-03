@@ -44,7 +44,7 @@
 
         <div class="preloader" id="preloader">
           <div class="preloader-inner">
-            <div class="preloader-logo"><img src="${company.logo}" alt="${company.name}"></div>
+            <div class="preloader-logo"><img src="${company.logo}" alt="" width="1024" height="1024"></div>
             <div class="preloader-bar"><div class="preloader-bar-inner"></div></div>
           </div>
         </div>
@@ -52,7 +52,7 @@
         <header class="navbar" id="navbar">
           <div class="navbar-container">
             <a href="index.html" class="navbar-logo">
-              <img src="${company.logo}" alt="${company.name}" class="logo-img">
+              <img src="${company.logo}" alt="${company.name}" width="1024" height="1024" class="logo-img">
             </a>
             <nav class="navbar-menu" id="navbarMenu">
               <a href="index.html" class="nav-link ${active("index.html")}">HOME</a>
@@ -78,7 +78,7 @@
           <div class="mobile-menu-overlay" id="mobileOverlay"></div>
           <div class="mobile-menu-panel">
             <div class="mobile-menu-header">
-              <a href="index.html" class="mobile-logo"><img src="${company.logo}" alt="${company.name}"></a>
+              <a href="index.html" class="mobile-logo"><img src="${company.logo}" alt="${company.name}" width="1024" height="1024"></a>
               <button class="mobile-close" id="mobileClose" aria-label="Close menu">x</button>
             </div>
             <nav class="mobile-menu-nav">
@@ -114,11 +114,11 @@
             <div class="container">
               <div class="footer-grid">
                 <div class="footer-col footer-brand-col">
-                  <a href="index.html" class="footer-logo"><img src="${company.logo}" alt="${company.name}"></a>
+                  <a href="index.html" class="footer-logo"><img src="${company.logo}" alt="${company.name}" width="1024" height="1024"></a>
                   <p class="footer-brand-desc">${company.description}</p>
                 </div>
                 <div class="footer-col">
-                  <h4 class="footer-heading">Quick Links</h4>
+                  <h2 class="footer-heading">Quick Links</h2>
                   <ul class="footer-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
@@ -129,20 +129,20 @@
                   </ul>
                 </div>
                 <div class="footer-col">
-                  <h4 class="footer-heading">Services</h4>
+                  <h2 class="footer-heading">Services</h2>
                   <ul class="footer-links">
                     ${services.slice(0, 6).map((service) => `<li><a href="${serviceUrl(service.slug)}">${service.title}</a></li>`).join("")}
                   </ul>
                 </div>
                 <div class="footer-col">
-                  <h4 class="footer-heading">Get In Touch</h4>
+                  <h2 class="footer-heading">Get In Touch</h2>
                   <div class="footer-contact-info">
                     <div class="footer-contact-item"><span>${company.address}</span></div>
                     <div class="footer-contact-item"><a href="tel:${company.phone}">${company.phoneDisplay}</a></div>
                     <div class="footer-contact-item"><a href="mailto:${company.email}">${company.email}</a></div>
                   </div>
                   <div class="footer-newsletter">
-                    <h5 class="newsletter-title">Design notes, by email</h5>
+                    <h3 class="newsletter-title">Design notes, by email</h3>
                     <a href="mailto:${company.email}?subject=Design%20notes" class="newsletter-link">Ask us to share updates &rarr;</a>
                   </div>
                 </div>

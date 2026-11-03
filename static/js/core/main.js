@@ -418,13 +418,26 @@ const HeroSlider = {
     },
 
     show: function (index) {
-        this.slides[this.current].classList.remove('active');
-        this.dots[this.current].classList.remove('active');
+        const nextImage = this.slides[index] && this.slides[index].querySelector('img[data-src]');
+        if (nextImage) {
+            const source = nextImage.dataset.src;
+            nextImage.removeAttribute('data-src');
+            nextImage.onload = () => this.activate(index);
+            nextImage.onerror = () => this.activate(index);
+            nextImage.src = source;
+            return;
+        }
+        this.activate(index);
+    },
+
+    activate: function (index) {
+        if (this.slides[this.current]) this.slides[this.current].classList.remove('active');
+        if (this.dots[this.current]) this.dots[this.current].classList.remove('active');
 
         this.current = index;
 
         this.slides[this.current].classList.add('active');
-        this.dots[this.current].classList.add('active');
+        if (this.dots[this.current]) this.dots[this.current].classList.add('active');
     },
 
     bindDots: function () {

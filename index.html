@@ -10,11 +10,9 @@
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700;900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="static/css/core/site.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700;900&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700;900&display=swap" /></noscript>
+    <link rel="stylesheet" href="static/css/core/site.css?v=20261103-performance" />
     <link rel="stylesheet" href="static/css/pages/home.css" />
   </head>
   <body>
@@ -23,21 +21,26 @@
         <div class="slider">
           <div class="slide active">
             <img
-              src="static/images/hero/hero1.jpg.png"
+              src="static/images/hero/hero1.jpg"
               alt="Luxury modular kitchen"
+              width="1494"
+              height="1053"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
             />
           </div>
           <div class="slide">
-            <img src="static/images/hero/hero2.jpg" alt="Luxury bedroom" />
+            <img data-src="static/images/hero/hero2.jpg" alt="Luxury bedroom" width="1477" height="1065" decoding="async" />
           </div>
           <div class="slide">
-            <img src="static/images/hero/hero3.jpg" alt="Luxury living room" />
+            <img data-src="static/images/hero/hero3.jpg" alt="Luxury living room" width="1652" height="952" decoding="async" />
           </div>
           <div class="slide">
-            <img src="static/images/hero/hero4.jpg" alt="Luxury wardrobe" />
+            <img data-src="static/images/hero/hero4.jpg" alt="Luxury wardrobe" width="1698" height="926" decoding="async" />
           </div>
           <div class="slide">
-            <img src="static/images/hero/hero5.jpg" alt="Luxury dining room" />
+            <img data-src="static/images/hero/hero5.jpg" alt="Luxury dining room" width="1652" height="952" decoding="async" />
           </div>
           <div class="hero-overlay"></div>
           <div class="home-hero-content">
@@ -70,22 +73,22 @@
         <div class="feature-card">
           <div class="feature-item">
             <div class="feature-icon">&loz;</div>
-            <h3>Premium Quality</h3>
+            <h2>Premium Quality</h2>
             <p>Finest materials and craftsmanship</p>
           </div>
           <div class="feature-item">
             <div class="feature-icon">&#10003;</div>
-            <h3>On-Time Delivery</h3>
+            <h2>On-Time Delivery</h2>
             <p>Planned milestones from start to finish</p>
           </div>
           <div class="feature-item">
             <div class="feature-icon">10</div>
-            <h3>10-Year Warranty</h3>
+            <h2>10-Year Warranty</h2>
             <p>Long lasting quality assurance</p>
           </div>
           <div class="feature-item">
             <div class="feature-icon">&#9733;</div>
-            <h3>Rated 4.9 / 5</h3>
+            <h2>Rated 4.9 / 5</h2>
             <p>Trusted by happy homeowners</p>
           </div>
         </div>
@@ -125,11 +128,11 @@
         </div>
       </section>
     </main>
-    <script src="static/js/core/site-data.js" defer></script>
+    <script src="static/js/core/site-data.js?v=20261103-performance" defer></script>
     <script src="static/js/core/site-config.js?v=20261102" defer></script>
-    <script src="static/js/core/layout.js" defer></script>
-    <script src="static/js/core/main.js?v=20261102-preloader" defer></script>
-    <script src="static/js/pages/home.js" defer></script>
+    <script src="static/js/core/layout.js?v=20261103-performance" defer></script>
+    <script src="static/js/core/main.js?v=20261103-performance" defer></script>
+    <script src="static/js/pages/home.js?v=20261103-performance" defer></script>
     <script src="static/js/pages/contact.js?v=20261102" defer></script>
   </body>
 </html>
