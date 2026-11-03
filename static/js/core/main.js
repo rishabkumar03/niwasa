@@ -23,22 +23,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 const Preloader = {
-    skipSplashKey: 'niwasaSkipSplashOnce',
-
     init: function() {
         const preloader = document.getElementById('preloader');
         const splash = document.getElementById('splashScreen');
         const video = document.getElementById('splashVideo');
-        const skipSplashOnce = this.storageGet(this.skipSplashKey) === 'true';
-        this.storageRemove(this.skipSplashKey);
-        this.trackInternalNavigation();
-
-        const shouldShowSplash = Boolean(splash) && !skipSplashOnce;
+        const shouldShowSplash = Boolean(splash);
         let preloaderHidden = false;
         let splashHidden = !shouldShowSplash;
 
         document.body.style.overflow = 'hidden';
-        if (!shouldShowSplash && splash) splash.classList.add('hidden');
 
         function hidePreloader() {
             if (!preloader || preloaderHidden) return;
@@ -61,10 +54,10 @@ const Preloader = {
             });
             video.addEventListener('ended', function() {
                 setTimeout(hideSplash, 250);
-            });
+            }, { once: true });
             video.addEventListener('error', function() {
                 setTimeout(hideSplash, 1200);
-            });
+            }, { once: true });
         }
 
         window.addEventListener('load', function() {
@@ -73,65 +66,11 @@ const Preloader = {
             } else {
                 setTimeout(hidePreloader, 800);
             }
-        });
+        }, { once: true });
 
         setTimeout(shouldShowSplash ? hideSplash : hidePreloader, shouldShowSplash ? 4200 : 3000);
-    },
-
-    trackInternalNavigation: function() {
-        if (this.navigationTracked) return;
-        this.navigationTracked = true;
-
-        document.addEventListener('click', function(event) {
-            const link = event.target.closest ? event.target.closest('a[href]') : null;
-            if (!link || event.defaultPrevented || event.button !== 0) return;
-            if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-            if (link.target && link.target.toLowerCase() !== '_self') return;
-            if (link.hasAttribute('download')) return;
-
-            const href = link.getAttribute('href');
-            if (!href || href.charAt(0) === '#') return;
-            if (/^(mailto:|tel:|javascript:)/i.test(href)) return;
-
-            let url;
-            try {
-                url = new URL(href, window.location.href);
-            } catch (error) {
-                return;
-            }
-
-            if (url.origin !== window.location.origin) return;
-            if (url.pathname === window.location.pathname && url.search === window.location.search && url.hash) return;
-
-            Preloader.storageSet(Preloader.skipSplashKey, 'true');
-        }, true);
-    },
-
-    storageGet: function(key) {
-        try {
-            return window.sessionStorage.getItem(key);
-        } catch (error) {
-            return null;
-        }
-    },
-
-    storageSet: function(key, value) {
-        try {
-            window.sessionStorage.setItem(key, value);
-        } catch (error) {
-            return;
-        }
-    },
-
-    storageRemove: function(key) {
-        try {
-            window.sessionStorage.removeItem(key);
-        } catch (error) {
-            return;
-        }
     }
 };
-
 const Navbar = {
     init: function() {
         const navbar = document.getElementById('navbar');

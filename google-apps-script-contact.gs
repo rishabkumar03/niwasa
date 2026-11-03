@@ -9,7 +9,7 @@
  * without blind success.
  */
 
-var SPREADSHEET_ID = ""; // Optional: paste Sheet ID for standalone scripts.
+var SPREADSHEET_ID = "PASTE_SPREADSHEET_ID_HERE"; // Required for web-app executions.
 var NOTIFICATION_EMAIL = "interiorsniwasa@gmail.com";
 
 function doGet(e) {
@@ -93,6 +93,7 @@ function saveLead_(data) {
     data.message || "",
     data.source || "NIWASA Website"
   ]);
+  Logger.log("Lead appended to spreadsheet: " + sheet.getParent().getUrl() + " (tab: " + sheet.getName() + ", row: " + sheet.getLastRow() + ")");
 
   var emailResult = sendNotificationEmail_(timestamp, data);
   Logger.log("Lead saved for: " + (data.name || "unknown"));
@@ -108,13 +109,16 @@ function saveLead_(data) {
 }
 
 function getLeadsSheet_() {
-  var ss = SPREADSHEET_ID
-    ? SpreadsheetApp.openById(SPREADSHEET_ID)
-    : SpreadsheetApp.getActiveSpreadsheet();
-
-  if (!ss) {
-    throw new Error("No spreadsheet found. Bind this script to the Sheet or set SPREADSHEET_ID.");
+  if (/^AKfycb/i.test(String(SPREADSHEET_ID || ""))) {
+    throw new Error("SPREADSHEET_ID is an Apps Script deployment ID. Use the Google Sheet file ID from docs.google.com/spreadsheets/d/<ID>/edit.");
   }
+
+  if (!SPREADSHEET_ID || SPREADSHEET_ID === "PASTE_SPREADSHEET_ID_HERE") {
+    throw new Error("Set SPREADSHEET_ID to the target Google Sheet ID before deploying the web app.");
+  }
+
+  // A deployed web app has no active spreadsheet context; always open the target explicitly.
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
 
   var sheet = ss.getSheetByName("Leads");
 
@@ -159,7 +163,16 @@ function parsePostData_(e) {
 function validateLead_(data) {
   if (!data) throw new Error("No form data received.");
   if (!String(data.name || "").trim()) throw new Error("Name is required.");
-  if (!String(data.phone || "").trim()) throw new Error("Phone is required.");
+
+  var phone = String(data.phone || "").trim();
+  if (!/^[6-9][0-9]{9}$/.test(phone)) {
+    throw new Error("Phone must be a 10-digit mobile number starting from 6 to 9.");
+  }
+
+  var email = String(data.email || "").trim();
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    throw new Error("Email address is invalid.");
+  }
 }
 
 function sanitizeCallback_(callback) {

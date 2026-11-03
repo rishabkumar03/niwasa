@@ -26,11 +26,12 @@
           <h2 class="contact-form-title">Book a design consultation</h2>
           <div class="contact-form-fields">
             <div class="form-group"><label class="form-label" for="contactName">Name</label><input id="contactName" class="form-input" name="name" autocomplete="name" required></div>
-            <div class="form-group"><label class="form-label" for="contactPhone">Phone</label><input id="contactPhone" class="form-input" type="tel" name="phone" autocomplete="tel" required></div>
-            <div class="form-group"><label class="form-label" for="contactEmail">Email</label><input id="contactEmail" class="form-input" type="email" name="email" autocomplete="email" required></div>
+            <div class="form-group"><label class="form-label" for="contactPhone">Phone</label><input id="contactPhone" class="form-input" type="tel" name="phone" autocomplete="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" minlength="10" maxlength="10" title="Enter a 10-digit mobile number starting with 6, 7, 8, or 9." required></div>
+            <div class="form-group"><label class="form-label" for="contactEmail">Email</label><input id="contactEmail" class="form-input" type="email" name="email" autocomplete="email"></div>
             <div class="form-group"><label class="form-label" for="projectType">Project Type</label><select id="projectType" class="form-select" name="project_type"><option>Full Home Interior</option><option>Modular Kitchen</option><option>Bedroom / Wardrobe</option><option>Living Room</option><option>Other</option></select></div>
             <div class="form-group contact-message-field"><label class="form-label" for="contactMessage">Message</label><textarea id="contactMessage" class="form-textarea" name="message" placeholder="Tell us about your rooms, timeline, and design style."></textarea></div>
             <button class="btn btn-primary contact-submit" type="submit">Submit Request</button>
+            <div class="lead-form-status" role="status" aria-live="polite" hidden></div>
           </div>
         </form>
         <div class="contact-panel">
@@ -49,11 +50,34 @@
         </div>
       </div>
     </section>
+
+    <section class="contact-visit section" id="visit-us" aria-labelledby="visitUsTitle">
+      <div class="container">
+        <div class="contact-visit-heading">
+          <p class="page-hero-label">VISIT NIWASA</p>
+          <h2 id="visitUsTitle" class="section-title">Meet us in person</h2>
+          <p class="section-subtitle">Would you like to discuss your project face to face? You’re welcome to visit us.</p>
+          <p class="section-subtitle">Find our location on the map and get directions.</p>
+        </div>
+        <div class="contact-map-frame">
+          <iframe
+            src="https://maps.google.com/maps?q=23.3815471%2C85.298274&z=16&output=embed"
+            title="NIWASA Interiors location on Google Maps"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="contact-visit-heading">
+          <a class="btn btn-primary contact-visit-directions" href="https://maps.app.goo.gl/3SPs3e5pY4VjYBdB7" target="_blank" rel="noopener noreferrer">Get directions</a>
+        </div>
+      </div>
+    </section>
   </main>
   <script src="static/js/core/site-data.js" defer></script>
-  <script src="static/js/core/site-config.js?v=20260721-gsheet-debug" defer></script>
+  <script src="static/js/core/site-config.js?v=20261102" defer></script>
   <script src="static/js/core/layout.js" defer></script>
-  <script src="static/js/core/main.js" defer></script>
-  <script src="static/js/pages/contact.js?v=20260721-gsheet-debug" defer></script>
+  <script src="static/js/core/main.js?v=20261102-preloader" defer></script>
+  <script src="static/js/pages/contact.js?v=20261102" defer></script>
 </body>
 </html>

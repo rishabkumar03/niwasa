@@ -158,6 +158,24 @@
           </div>
         </footer>
 
+        <div class="lead-modal" id="leadModal" aria-hidden="true">
+          <div class="lead-modal-backdrop" data-lead-modal-close></div>
+          <section class="lead-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="popupFormTitle" tabindex="-1">
+            <button class="lead-modal-close" type="button" data-lead-modal-close aria-label="Close consultation form">&times;</button>
+            <form class="card card-body contact-form lead-modal-form" data-custom-submit="contact-lead">
+              <h2 id="popupFormTitle" class="contact-form-title">Book a design consultation</h2>
+              <div class="contact-form-fields">
+                <div class="form-group"><label class="form-label" for="popupName">Name</label><input id="popupName" class="form-input" name="name" autocomplete="name" required></div>
+                <div class="form-group"><label class="form-label" for="popupPhone">Phone</label><input id="popupPhone" class="form-input" type="tel" name="phone" autocomplete="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" minlength="10" maxlength="10" title="Enter a 10-digit mobile number starting with 6, 7, 8, or 9." required></div>
+                <div class="form-group lead-modal-optional"><label class="form-label" for="popupEmail">Email</label><input id="popupEmail" class="form-input" type="email" name="email" autocomplete="email"></div>
+                <div class="form-group lead-modal-optional"><label class="form-label" for="popupProjectType">Project Type</label><select id="popupProjectType" class="form-select" name="project_type"><option>Full Home Interior</option><option>Modular Kitchen</option><option>Bedroom / Wardrobe</option><option>Living Room</option><option>Other</option></select></div>
+                <div class="form-group contact-message-field lead-modal-optional"><label class="form-label" for="popupMessage">Message</label><textarea id="popupMessage" class="form-textarea" name="message" rows="2" placeholder="Tell us about your rooms, timeline, and design style."></textarea></div>
+                <button class="btn btn-primary contact-submit" type="submit">Submit Request</button>
+              </div>
+              <div class="lead-form-status" role="status" aria-live="polite" hidden></div>
+            </form>
+          </section>
+        </div>
         <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to top">&uarr;</button>
         <div class="toast-container" id="toastContainer"></div>
       `

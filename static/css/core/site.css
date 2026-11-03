@@ -396,6 +396,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .splash-inner {
+    animation: splashReveal .8s cubic-bezier(.2,.75,.25,1) both;
     text-align: center;
     width: min(88vw, 520px);
     display: grid;
@@ -508,6 +509,11 @@ h1, h2, h3, h4, h5, h6 {
 
 @keyframes preloaderSpin {
     to { transform: rotate(360deg); }
+}
+
+@keyframes splashReveal {
+    from { opacity: 0; transform: translateY(14px) scale(.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes splashFloat {
@@ -2996,4 +3002,120 @@ width:100%;
         padding: 126px 0 56px;
     }
 
+}
+
+/* Consultation lead popup: keep the familiar contact form card inside one viewport. */
+.lead-modal {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--z-modal) + 10);
+    display: grid;
+    place-items: center;
+    padding: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .2s ease, visibility .2s ease;
+}
+.lead-modal.is-open { opacity: 1; visibility: visible; }
+.lead-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 24, 20, .68);
+    backdrop-filter: blur(4px);
+}
+.lead-modal-dialog {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 760px);
+    max-height: calc(var(--lead-viewport-height, 100dvh) - 24px);
+    overflow: hidden;
+}
+.lead-modal-dialog .contact-form {
+    height: auto;
+    max-height: inherit;
+    overflow: hidden;
+    padding: 28px 34px;
+    border-radius: 24px;
+    background: var(--bg-primary, #fff);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, .28);
+}
+.lead-modal-close {
+    position: absolute;
+    z-index: 2;
+    top: 10px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-primary, #222);
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+}
+.lead-modal .contact-form-title { margin: 0 42px 8px 0; font-size: clamp(1.4rem, 3vw, 1.9rem); }
+.lead-modal-intro { margin: 0 0 14px; color: var(--text-secondary, #666); line-height: 1.5; }
+.lead-modal .contact-form-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 16px;
+    row-gap: 10px;
+}
+.lead-modal .contact-form-fields .form-group { min-width: 0; margin: 0; }
+.lead-modal .contact-form-fields .form-label { display: block; margin-bottom: 4px; font-size: .88rem; }
+.lead-modal .contact-form-fields .form-input,
+.lead-modal .contact-form-fields .form-select { width: 100%; min-width: 0; min-height: 40px; padding: 8px 11px; }
+.lead-modal .contact-form-fields .form-textarea { width: 100%; min-height: 52px; padding: 8px 11px; resize: none; }
+.lead-modal .contact-form-fields .contact-message-field,
+.lead-modal .contact-form-fields .contact-submit { grid-column: 1 / -1; }
+.lead-modal .contact-form-fields .contact-submit { min-height: 44px; margin-top: 2px; }
+body.lead-modal-open { overflow: hidden; }
+body.lead-modal-keyboard-open .lead-modal-intro,
+body.lead-modal-keyboard-open .lead-modal-optional { display: none !important; }
+
+@media (max-width: 520px) {
+    .lead-modal-dialog .contact-form { padding: 22px 18px 18px; border-radius: 20px; }
+    .lead-modal .contact-form-fields { column-gap: 10px; row-gap: 8px; }
+    .lead-modal .contact-form-fields .form-label { font-size: .8rem; }
+    .lead-modal .contact-form-fields .form-input,
+    .lead-modal .contact-form-fields .form-select { min-height: 38px; padding: 7px 8px; font-size: .88rem; }
+}
+
+@media (max-height: 620px) {
+    .lead-modal { padding: 8px; }
+    .lead-modal-dialog { max-height: calc(var(--lead-viewport-height, 100dvh) - 16px); }
+    .lead-modal-dialog .contact-form { padding: 16px 22px; }
+    .lead-modal .contact-form-title { margin-bottom: 4px; font-size: 1.35rem; }
+    .lead-modal-intro, .lead-modal-optional { display: none !important; }
+    .lead-modal .contact-form-fields { row-gap: 8px; }
+    .lead-modal .contact-form-fields .form-label { margin-bottom: 2px; }
+    .lead-modal .contact-form-fields .form-input { min-height: 36px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lead-modal, .lead-modal-dialog { transition: none; }
+}
+.lead-form-status[hidden] { display: none !important; }
+.lead-form-status {
+    grid-column: 1 / -1;
+    margin-top: 12px;
+    padding: 14px 16px;
+    border: 1px solid transparent;
+    border-radius: 14px;
+    font-size: .95rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+.lead-form-status.is-pending { color: #534a31; background: #f5f0df; border-color: #e8dcb8; }
+.lead-form-status.is-success { color: #24543a; background: #e8f4ec; border-color: #bfdfc8; }
+.lead-form-status.is-warning { color: #6a4d13; background: #fff5dc; border-color: #ead69d; }
+.lead-form-status.is-error { color: #7f2626; background: #fbeaea; border-color: #efc1c1; }
+.lead-status-close { width: 100%; margin-top: 12px; }
+.lead-modal .contact-form-fields > .lead-form-status { grid-column: 1 / -1; }
+.contact-form-fields > .lead-form-status { grid-column: 1 / -1; }
+.lead-modal .contact-form-fields[hidden] { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+    .splash-inner { animation: none; }
 }
