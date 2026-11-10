@@ -17,6 +17,7 @@
         <img src="${window.NIWASA_IMAGE_URL(service.image, 720)}" alt="${service.title}" width="800" height="600" loading="lazy" decoding="async" data-fallback-title="${service.title}">
         <div class="service-content">
           <h3>${service.title}</h3>
+          <p class="service-card-description">${service.shortDesc || service.description}</p>
           <div class="arrow-circle">&rarr;</div>
         </div>
       </a>

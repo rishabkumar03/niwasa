@@ -135,9 +135,28 @@
   }
 
   let modalReturnFocus = null;
-  function openLeadModal() {
+  let leadPopupTimer = null;
+  let leadPopupHandled = false;
+
+  function hasLeadPopupBeenHandled() {
+    if (leadPopupHandled) return true;
+    try {
+      leadPopupHandled = window.sessionStorage.getItem("niwasaLeadPopupShown") === "true";
+    } catch (error) { /* Keep the in-memory guard when storage is disabled. */ }
+    return leadPopupHandled;
+  }
+
+  function markLeadPopupHandled() {
+    leadPopupHandled = true;
+    try { window.sessionStorage.setItem("niwasaLeadPopupShown", "true"); } catch (error) { /* Storage may be disabled. */ }
+  }
+
+  function openLeadModal(options) {
     const modal = document.getElementById("leadModal");
     if (!modal || modal.classList.contains("is-open")) return;
+    window.clearTimeout(leadPopupTimer);
+    const manualOpen = Boolean(options && options.manual);
+    if (!manualOpen && hasLeadPopupBeenHandled()) return;
     modalReturnFocus = document.activeElement;
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
@@ -146,7 +165,7 @@
     const dialog = modal.querySelector(".lead-modal-dialog");
     if (window.matchMedia("(min-width: 768px)").matches && name) name.focus();
     else if (dialog) dialog.focus();
-    try { window.sessionStorage.setItem("niwasaLeadPopupShown", "true"); } catch (error) { /* Storage may be disabled. */ }
+    markLeadPopupHandled();
   }
 
   function closeLeadModal() {
@@ -171,7 +190,7 @@
     window.addEventListener("resize", updateLeadModalViewport);
     if (window.visualViewport) window.visualViewport.addEventListener("resize", updateLeadModalViewport);
     document.querySelectorAll("[data-open-lead-modal]").forEach(function (trigger) {
-      trigger.addEventListener("click", openLeadModal);
+      trigger.addEventListener("click", function () { openLeadModal({ manual: true }); });
     });
     modal.querySelectorAll("[data-lead-modal-close]").forEach(function (control) {
       control.addEventListener("click", closeLeadModal);
@@ -197,9 +216,35 @@
       }
     });
 
-    let alreadyShown = false;
-    try { alreadyShown = window.sessionStorage.getItem("niwasaLeadPopupShown") === "true"; } catch (error) { /* Storage may be disabled. */ }
-    if (!alreadyShown) window.setTimeout(openLeadModal, 3000);
+    const currentPage = window.location.pathname.split("/").pop();
+    const isHomePage = !currentPage || currentPage === "index.html" || window.location.pathname.endsWith("/");
+    if (!isHomePage || hasLeadPopupBeenHandled()) return;
+
+    let engagementCount = 0;
+    let lastCountedScroll = window.scrollY;
+    let scrollPauseTimer = null;
+    const registerEngagement = function () {
+      if (hasLeadPopupBeenHandled() || document.querySelector(".mobile-menu.active") || document.querySelector(".lead-modal.is-open")) return;
+      engagementCount += 1;
+      if (engagementCount >= 3) openLeadModal({ automatic: true });
+    };
+
+    leadPopupTimer = window.setTimeout(function () { openLeadModal({ automatic: true }); }, 12000);
+
+    document.addEventListener("click", function (event) {
+      if (event.target.closest("#leadModal, a[href], input, textarea, select, [data-lead-modal-close]")) return;
+      registerEngagement();
+    });
+
+    window.addEventListener("scroll", function () {
+      window.clearTimeout(scrollPauseTimer);
+      scrollPauseTimer = window.setTimeout(function () {
+        const currentScroll = window.scrollY;
+        if (Math.abs(currentScroll - lastCountedScroll) < 24) return;
+        lastCountedScroll = currentScroll;
+        registerEngagement();
+      }, 350);
+    }, { passive: true });
   }
 
   document.addEventListener("DOMContentLoaded", function () {

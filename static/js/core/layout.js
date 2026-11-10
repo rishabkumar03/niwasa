@@ -26,35 +26,47 @@
       .join("");
   }
 
+  function splashMarkup() {
+    try {
+      if (window.sessionStorage.getItem("niwasaSplashPlayed") === "true") return "";
+      window.sessionStorage.setItem("niwasaSplashPlayed", "true");
+    } catch (error) {
+      // Keep the intro on the first page when storage is unavailable.
+    }
+
+    return `
+      <div class="splash-screen" id="splashScreen">
+        <div class="splash-inner">
+          <div class="splash-video-frame">
+            <video class="splash-video" id="splashVideo" autoplay muted playsinline preload="auto" aria-label="${company.name} intro">
+              <source src="niwasa-website-logo.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="splash-brand">${company.name}</div>
+          <div class="splash-line"><span></span></div>
+        </div>
+      </div>
+
+      <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+          <div class="preloader-logo"><img src="${company.logo}" alt="" width="256" height="256"></div>
+          <div class="preloader-bar"><div class="preloader-bar-inner"></div></div>
+        </div>
+      </div>`;
+  }
+
   function renderHeader() {
     document.body.insertAdjacentHTML(
       "afterbegin",
       `
-        <div class="splash-screen" id="splashScreen">
-          <div class="splash-inner">
-            <div class="splash-video-frame">
-              <video class="splash-video" id="splashVideo" autoplay muted playsinline preload="auto" aria-label="${company.name} intro">
-                <source src="niwasa-website-logo.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="splash-brand">${company.name}</div>
-            <div class="splash-line"><span></span></div>
-          </div>
-        </div>
-
-        <div class="preloader" id="preloader">
-          <div class="preloader-inner">
-            <div class="preloader-logo"><img src="${company.logo}" alt="" width="256" height="256"></div>
-            <div class="preloader-bar"><div class="preloader-bar-inner"></div></div>
-          </div>
-        </div>
+        ${splashMarkup()}
 
         <header class="navbar" id="navbar">
           <div class="navbar-container">
             <a href="index.html" class="navbar-logo">
               <img src="${company.logo}" alt="${company.name}" width="256" height="256" class="logo-img">
             </a>
-            <nav class="navbar-menu" id="navbarMenu">
+            <nav class="navbar-menu" id="navbarMenu" aria-label="Main navigation">
               <a href="index.html" class="nav-link ${active("index.html")}">HOME</a>
               <a href="about.html" class="nav-link ${active("about.html")}">ABOUT</a>
               <div class="nav-dropdown">
@@ -68,25 +80,25 @@
               <a href="contact.html" class="nav-link ${active("contact.html")}">CONTACT</a>
             </nav>
             <a href="contact.html#consultation" class="navbar-cta"><span>BOOK CONSULTATION</span></a>
-            <button class="navbar-toggle" id="navbarToggle" aria-label="Toggle navigation">
+            <button class="navbar-toggle" id="navbarToggle" aria-label="Open navigation menu" aria-controls="mobileMenu" aria-expanded="false">
               <span class="toggle-line"></span><span class="toggle-line"></span><span class="toggle-line"></span>
             </button>
           </div>
         </header>
 
-        <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu" id="mobileMenu" aria-hidden="true" inert>
           <div class="mobile-menu-overlay" id="mobileOverlay"></div>
           <div class="mobile-menu-panel">
             <div class="mobile-menu-header">
               <a href="index.html" class="mobile-logo"><img src="${company.logo}" alt="${company.name}" width="256" height="256"></a>
-              <button class="mobile-close" id="mobileClose" aria-label="Close menu">x</button>
+              <button class="mobile-close" id="mobileClose" aria-label="Close navigation menu">&times;</button>
             </div>
-            <nav class="mobile-menu-nav">
+            <nav class="mobile-menu-nav" aria-label="Mobile navigation">
               <a href="index.html" class="mobile-nav-link">Home</a>
               <a href="about.html" class="mobile-nav-link">About</a>
               <div class="mobile-nav-dropdown">
-                <button class="mobile-nav-link mobile-dropdown-toggle" type="button">Services</button>
-                <div class="mobile-dropdown-content">${serviceLinks("")}</div>
+                <button class="mobile-nav-link mobile-dropdown-toggle" type="button" aria-expanded="false" aria-controls="mobileServicesMenu">Services</button>
+                <div class="mobile-dropdown-content" id="mobileServicesMenu" aria-hidden="true">${serviceLinks("")}</div>
               </div>
               <a href="our-work.html" class="mobile-nav-link">Our Work</a>
               <a href="journal.html" class="mobile-nav-link">Journal</a>

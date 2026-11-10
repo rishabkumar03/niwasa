@@ -25,6 +25,7 @@ const Preloader = {
         const preloader = document.getElementById('preloader');
         const splash = document.getElementById('splashScreen');
         const video = document.getElementById('splashVideo');
+        if (!preloader && !splash) return;
         const shouldShowSplash = Boolean(splash);
         let preloaderHidden = false;
         let splashHidden = !shouldShowSplash;
@@ -106,15 +107,34 @@ const MobileMenu = {
 
         if (!toggle || !mobileMenu) return;
 
-        toggle.addEventListener('click', function() {
-            mobileMenu.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
+        const focusableItems = () => Array.from(mobileMenu.querySelectorAll('a[href], button:not([disabled])'))
+            .filter((item) => !item.closest('[aria-hidden="true"]') && item.getClientRects().length > 0);
 
-        const closeMenu = function() {
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
+        const openMenu = function() {
+            mobileMenu.classList.add('active');
+            mobileMenu.removeAttribute('inert');
+            mobileMenu.setAttribute('aria-hidden', 'false');
+            toggle.setAttribute('aria-expanded', 'true');
+            toggle.setAttribute('aria-label', 'Close navigation menu');
+            document.body.style.overflow = 'hidden';
+            const firstItem = mobileMenu.querySelector('.mobile-menu-nav a[href], .mobile-menu-nav button');
+            if (firstItem) firstItem.focus();
         };
+
+        const closeMenu = function(restoreFocus) {
+            mobileMenu.classList.remove('active');
+            mobileMenu.setAttribute('inert', '');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            toggle.setAttribute('aria-expanded', 'false');
+            toggle.setAttribute('aria-label', 'Open navigation menu');
+            document.body.style.overflow = '';
+            if (restoreFocus !== false) toggle.focus();
+        };
+
+        toggle.addEventListener('click', function() {
+            if (mobileMenu.classList.contains('active')) closeMenu();
+            else openMenu();
+        });
 
         if (closeBtn) closeBtn.addEventListener('click', closeMenu);
         if (overlay) overlay.addEventListener('click', closeMenu);
@@ -123,17 +143,36 @@ const MobileMenu = {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 const dropdown = this.closest('.mobile-nav-dropdown');
-                if (dropdown) dropdown.classList.toggle('open');
+                if (dropdown) {
+                    const isOpen = dropdown.classList.toggle('open');
+                    this.setAttribute('aria-expanded', String(isOpen));
+                    const submenu = document.getElementById(this.getAttribute('aria-controls'));
+                    if (submenu) submenu.setAttribute('aria-hidden', String(!isOpen));
+                }
             });
         });
 
         document.querySelectorAll('.mobile-menu-nav a:not(.mobile-dropdown-toggle)').forEach(function(link) {
-            link.addEventListener('click', closeMenu);
+            link.addEventListener('click', function() { closeMenu(false); });
         });
 
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
                 closeMenu();
+                return;
+            }
+            if (e.key === 'Tab' && mobileMenu.classList.contains('active')) {
+                const items = focusableItems();
+                if (!items.length) return;
+                const first = items[0];
+                const last = items[items.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
             }
         });
     }
@@ -214,7 +253,7 @@ const SmoothScroll = {
 const HeroSlider = {
     current: 0,
     timer: null,
-    initialTimer: null,
+    transitionRequest: 0,
 
     init: function () {
         this.slides = document.querySelectorAll('.slide');
@@ -222,13 +261,19 @@ const HeroSlider = {
 
         if (!this.slides.length) return;
 
-        this.start();
+        const firstImage = this.slides[0].querySelector('img');
+        const beginSlideshow = () => this.start();
+        if (firstImage && !firstImage.complete) {
+            firstImage.addEventListener('load', beginSlideshow, { once: true });
+            firstImage.addEventListener('error', beginSlideshow, { once: true });
+        } else {
+            beginSlideshow();
+        }
         this.bindDots();
 
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
-                clearInterval(this.timer);
-                clearTimeout(this.initialTimer);
+                clearTimeout(this.timer);
             } else {
                 this.start();
             }
@@ -236,14 +281,12 @@ const HeroSlider = {
     },
 
     start: function () {
-        clearInterval(this.timer);
-        clearTimeout(this.initialTimer);
-        // Keep the initial, high-priority hero in place while the page settles
-        // and Lighthouse records its LCP candidate.
-        this.initialTimer = setTimeout(() => {
+        clearTimeout(this.timer);
+        if (document.hidden) return;
+        this.timer = setTimeout(() => {
+            this.timer = null;
             this.next();
-            this.timer = setInterval(() => this.next(), 8000);
-        }, 20000);
+        }, 8000);
     },
 
     next: function () {
@@ -257,16 +300,24 @@ const HeroSlider = {
     },
 
     show: function (index) {
+        clearTimeout(this.timer);
+        const request = ++this.transitionRequest;
         const nextImage = this.slides[index] && this.slides[index].querySelector('img[data-src]');
+        const activateAndSchedule = () => {
+            if (request !== this.transitionRequest) return;
+            this.activate(index);
+            this.start();
+        };
+
         if (nextImage) {
             const source = nextImage.dataset.src;
             nextImage.removeAttribute('data-src');
-            nextImage.onload = () => this.activate(index);
-            nextImage.onerror = () => this.activate(index);
+            nextImage.onload = activateAndSchedule;
+            nextImage.onerror = activateAndSchedule;
             nextImage.src = source;
             return;
         }
-        this.activate(index);
+        activateAndSchedule();
     },
 
     activate: function (index) {
@@ -283,7 +334,6 @@ const HeroSlider = {
         this.dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
                 this.show(index);
-                this.start();
             });
         });
     }
