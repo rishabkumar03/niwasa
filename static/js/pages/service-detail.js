@@ -10,23 +10,13 @@
     return data.services.find((service) => service.slug === slug) || data.services[0];
   }
 
-  function shuffledImages(service) {
-    const images = Array.isArray(service.featureImages) && service.featureImages.length
-      ? service.featureImages.slice()
-      : [service.image];
-
-    return images
-      .map((image) => ({ image, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map((item) => item.image);
-  }
-
   function renderServiceDetail() {
     const target = document.getElementById("serviceDetail");
     if (!target) return null;
 
     const service = selectedService();
-    const featureImages = shuffledImages(service);
+    // Keep each image paired with the feature at the same index in site-data.js.
+    const featureImages = Array.isArray(service.featureImages) ? service.featureImages : [];
     document.title = service.title + " | " + data.company.name;
 
     target.innerHTML = `
@@ -55,12 +45,15 @@
           <div class="features-grid">
             ${service.features.map((feature, index) => {
               const image = featureImages[index] || service.image;
+              const description = service.featureDescriptions && service.featureDescriptions[index]
+                ? service.featureDescriptions[index]
+                : service.description;
               return `
                 <div class="feature-card">
                   <img src="${window.NIWASA_IMAGE_URL(image, 720)}" alt="${feature}" width="800" height="600" data-fallback-title="${feature}" loading="lazy" decoding="async">
                   <div class="feature-card-body">
                     <h3>${feature}</h3>
-                    <p>${service.description}</p>
+                    <p>${description}</p>
                   </div>
                 </div>
               `;

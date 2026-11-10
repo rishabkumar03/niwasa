@@ -252,15 +252,7 @@
 .slider-dots { bottom: 24px; }
 .dot.active { background: #c1a15d; }
 
-/* Animate the initially active hero image as well as later slides. */
-@keyframes niwasaHeroKenBurns {
-    from { transform: scale(1); }
-    to { transform: scale(1.05); }
-}
-
-.hero-slider .slide.active img {
-    animation: niwasaHeroKenBurns 8s ease-out both;
-}
+.hero-slider .slide.is-initial-zoom-pending.active img { transform: scale(1); }
 
 @media (prefers-reduced-motion: reduce) {
     .hero-slider .slide,

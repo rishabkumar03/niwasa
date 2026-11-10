@@ -262,7 +262,13 @@ const HeroSlider = {
         if (!this.slides.length) return;
 
         const firstImage = this.slides[0].querySelector('img');
-        const beginSlideshow = () => this.start();
+        const firstSlide = this.slides[0];
+        const beginSlideshow = () => {
+            window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(() => firstSlide.classList.remove('is-initial-zoom-pending'));
+            });
+            this.start();
+        };
         if (firstImage && !firstImage.complete) {
             firstImage.addEventListener('load', beginSlideshow, { once: true });
             firstImage.addEventListener('error', beginSlideshow, { once: true });
@@ -286,7 +292,7 @@ const HeroSlider = {
         this.timer = setTimeout(() => {
             this.timer = null;
             this.next();
-        }, 8000);
+        }, 5000);
     },
 
     next: function () {
