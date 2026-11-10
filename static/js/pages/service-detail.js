@@ -57,7 +57,7 @@
               const image = featureImages[index] || service.image;
               return `
                 <div class="feature-card">
-                  <img src="${image}" alt="${feature}" width="800" height="600" data-fallback-title="${feature}" loading="lazy" decoding="async">
+                  <img src="${window.NIWASA_IMAGE_URL(image, 720)}" alt="${feature}" width="800" height="600" data-fallback-title="${feature}" loading="lazy" decoding="async">
                   <div class="feature-card-body">
                     <h3>${feature}</h3>
                     <p>${service.description}</p>

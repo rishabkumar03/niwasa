@@ -318,3 +318,10 @@ window.NIWASA_DATA = {
     }
   });
 })(window.NIWASA_DATA);
+
+window.NIWASA_IMAGE_URL = function (url, width) {
+  return String(url || "").replace(
+    "f_auto,q_auto,w_1200,c_limit",
+    "f_auto,q_auto,w_" + width + ",c_limit"
+  );
+};

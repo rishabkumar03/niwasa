@@ -13,7 +13,7 @@
 
     target.innerHTML = data.projects.map((project) => `
       <article class="work-card" data-aos="fade-up">
-        <img src="${project.image}" alt="${project.title}" width="960" height="720" loading="lazy" decoding="async" data-fallback-title="${project.title}">
+        <img src="${window.NIWASA_IMAGE_URL(project.image, 900)}" alt="${project.title}" width="960" height="720" loading="lazy" decoding="async" data-fallback-title="${project.title}">
         <div class="work-card-body">
           <span>${project.type}</span>
           <h2>${project.title}</h2>

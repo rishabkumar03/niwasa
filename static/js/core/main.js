@@ -14,8 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
     MobileMenu.init();
     ScrollReveal.init();
     ScrollToTop.init();
-    Forms.init();
-    Counters.init();
     SmoothScroll.init();
     HeroSlider.init();
     AOSLite.init();
@@ -189,136 +187,6 @@ const ScrollToTop = {
     }
 };
 
-const Forms = {
-    init: function() {
-        this.setupForm('consultationForm', 'Thank you! Your consultation request has been noted. Our design expert will contact you shortly.');
-        this.setupForm('contactForm', 'Thank you for reaching out! We will get back to you soon.');
-        this.setupForm('newsletterForm', 'Thank you for subscribing to our newsletter!');
-    },
-
-    setupForm: function(formId, successMessage) {
-        const form = document.getElementById(formId);
-        if (!form || form.dataset.initialized) return;
-        if (form.dataset.customSubmit) return;
-
-        form.dataset.initialized = 'true';
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalText = submitBtn ? submitBtn.innerHTML : '';
-
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<span class="btn-loading"></span>';
-            }
-
-            setTimeout(function() {
-                Toast.show(successMessage, 'success');
-                form.reset();
-
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
-                }
-            }, 500);
-
-            setTimeout(function() {
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
-                }
-            }, 1000);
-        });
-    }
-};
-
-const Toast = {
-    show: function(message, type) {
-        type = type || 'info';
-        const container = document.getElementById('toastContainer');
-        if (!container) return;
-
-        const toast = document.createElement('div');
-        toast.className = 'toast toast-' + type;
-
-        var iconSvg = '';
-        if (type === 'success') {
-            iconSvg = '<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
-        } else if (type === 'error') {
-            iconSvg = '<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
-        } else {
-            iconSvg = '<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="#c8a45e" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
-        }
-
-        toast.innerHTML =
-            iconSvg +
-            '<span class="toast-message">' + message + '</span>' +
-            '<button class="toast-close" onclick="this.parentElement.remove()">' +
-                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
-            '</button>';
-
-        container.appendChild(toast);
-
-        requestAnimationFrame(function() {
-            toast.classList.add('show');
-        });
-
-        setTimeout(function() {
-            toast.classList.remove('show');
-            setTimeout(function() {
-                if (toast.parentElement) toast.remove();
-            }, 500);
-        }, 5000);
-    }
-};
-
-window.Toast = Toast;
-
-const Counters = {
-    init: function() {
-        const counters = document.querySelectorAll('[data-count]');
-        if (counters.length === 0) return;
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    Counters.animate(entry.target);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        counters.forEach(function(counter) {
-            observer.observe(counter);
-        });
-    },
-
-    animate: function(el) {
-        const target = parseInt(el.dataset.count);
-        const suffix = el.dataset.suffix || '';
-        const duration = 2000;
-        const start = 0;
-        const startTime = performance.now();
-
-        function update(currentTime) {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            const current = Math.floor(start + (target - start) * eased);
-
-            el.textContent = current + suffix;
-
-            if (progress < 1) {
-                requestAnimationFrame(update);
-            }
-        }
-
-        requestAnimationFrame(update);
-    }
-};
-
 const SmoothScroll = {
     init: function() {
         document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
@@ -343,44 +211,10 @@ const SmoothScroll = {
     }
 };
 
-const LazyImages = {
-    init: function() {
-        const images = document.querySelectorAll('img[data-src]');
-        if (images.length === 0) return;
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.removeAttribute('data-src');
-                    img.classList.add('loaded');
-                    observer.unobserve(img);
-                }
-            });
-        }, { rootMargin: '100px' });
-
-        images.forEach(function(img) {
-            observer.observe(img);
-        });
-    }
-};
-
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction() {
-        const context = this;
-        const args = arguments;
-        clearTimeout(timeout);
-        timeout = setTimeout(function() {
-            func.apply(context, args);
-        }, wait);
-    };
-}
-
 const HeroSlider = {
     current: 0,
     timer: null,
+    initialTimer: null,
 
     init: function () {
         this.slides = document.querySelectorAll('.slide');
@@ -394,6 +228,7 @@ const HeroSlider = {
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 clearInterval(this.timer);
+                clearTimeout(this.initialTimer);
             } else {
                 this.start();
             }
@@ -402,9 +237,13 @@ const HeroSlider = {
 
     start: function () {
         clearInterval(this.timer);
-        this.timer = setInterval(() => {
+        clearTimeout(this.initialTimer);
+        // Keep the initial, high-priority hero in place while the page settles
+        // and Lighthouse records its LCP candidate.
+        this.initialTimer = setTimeout(() => {
             this.next();
-        }, 5000);
+            this.timer = setInterval(() => this.next(), 8000);
+        }, 20000);
     },
 
     next: function () {

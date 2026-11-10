@@ -1003,7 +1003,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-ghost {
     background: transparent;
-    color: var(--gold);
+    color: var(--gold-text);
     padding: 10px 0;
     font-size: 0.8rem;
     letter-spacing: 1.5px;
@@ -1104,6 +1104,32 @@ h1, h2, h3, h4, h5, h6 {
     border-color: var(--gold);
     background: var(--gold-muted);
     transform: translateY(-2px);
+}
+
+.footer-social .social-instagram:hover,
+.footer-social .social-instagram:focus-visible {
+    color: #fff;
+    border-color: #c13584;
+    background: linear-gradient(45deg, #feda75 0%, #fa7e1e 28%, #d62976 62%, #962fbf 82%, #4f5bd5 100%);
+}
+
+.footer-social .social-facebook:hover,
+.footer-social .social-facebook:focus-visible {
+    color: #fff;
+    border-color: #0866ff;
+    background: #0866ff;
+}
+
+.footer-social .social-youtube:hover,
+.footer-social .social-youtube:focus-visible {
+    color: #fff;
+    border-color: #ff0033;
+    background: #ff0033;
+}
+
+.footer-social .social-link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
 }
 
 .footer-heading {
@@ -1509,7 +1535,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .breadcrumb .current {
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 
@@ -1828,7 +1854,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--gold-text);
     margin-bottom: var(--space-xs);
 }
 

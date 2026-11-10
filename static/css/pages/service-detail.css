@@ -59,7 +59,7 @@
 }
 
 .service-detail-process-grid span {
-    color: var(--gold);
+    color: var(--gold-text);
     font-family: var(--font-heading);
     font-size: 40px;
     font-weight: 700;
@@ -71,7 +71,7 @@
 }
 
 .faq-question strong {
-    color: var(--gold);
+    color: var(--gold-text);
     font-size: 24px;
 }
 

@@ -14,7 +14,7 @@
 
     target.innerHTML = data.services.slice(0, 6).map((service) => `
       <a href="${serviceUrl(service.slug)}" class="service-card" data-aos="fade-up">
-        <img src="${service.image}" alt="${service.title}" width="800" height="600" loading="lazy" decoding="async" data-fallback-title="${service.title}">
+        <img src="${window.NIWASA_IMAGE_URL(service.image, 720)}" alt="${service.title}" width="800" height="600" loading="lazy" decoding="async" data-fallback-title="${service.title}">
         <div class="service-content">
           <h3>${service.title}</h3>
           <div class="arrow-circle">&rarr;</div>
@@ -29,7 +29,7 @@
 
     target.innerHTML = data.projects.slice(0, 3).map((project) => `
       <a class="work-preview-card" href="our-work.html" data-aos="fade-up">
-        <img src="${project.image}" alt="${project.title}" width="960" height="720" loading="lazy" decoding="async" data-fallback-title="${project.title}">
+        <img src="${window.NIWASA_IMAGE_URL(project.image, 760)}" alt="${project.title}" width="960" height="720" loading="lazy" decoding="async" data-fallback-title="${project.title}">
         <div>
           <span>${project.type}</span>
           <h3>${project.title}</h3>

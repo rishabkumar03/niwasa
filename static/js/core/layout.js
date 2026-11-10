@@ -44,7 +44,7 @@
 
         <div class="preloader" id="preloader">
           <div class="preloader-inner">
-            <div class="preloader-logo"><img src="${company.logo}" alt="" width="1024" height="1024"></div>
+            <div class="preloader-logo"><img src="${company.logo}" alt="" width="256" height="256"></div>
             <div class="preloader-bar"><div class="preloader-bar-inner"></div></div>
           </div>
         </div>
@@ -52,7 +52,7 @@
         <header class="navbar" id="navbar">
           <div class="navbar-container">
             <a href="index.html" class="navbar-logo">
-              <img src="${company.logo}" alt="${company.name}" width="1024" height="1024" class="logo-img">
+              <img src="${company.logo}" alt="${company.name}" width="256" height="256" class="logo-img">
             </a>
             <nav class="navbar-menu" id="navbarMenu">
               <a href="index.html" class="nav-link ${active("index.html")}">HOME</a>
@@ -78,7 +78,7 @@
           <div class="mobile-menu-overlay" id="mobileOverlay"></div>
           <div class="mobile-menu-panel">
             <div class="mobile-menu-header">
-              <a href="index.html" class="mobile-logo"><img src="${company.logo}" alt="${company.name}" width="1024" height="1024"></a>
+              <a href="index.html" class="mobile-logo"><img src="${company.logo}" alt="${company.name}" width="256" height="256"></a>
               <button class="mobile-close" id="mobileClose" aria-label="Close menu">x</button>
             </div>
             <nav class="mobile-menu-nav">
@@ -114,8 +114,19 @@
             <div class="container">
               <div class="footer-grid">
                 <div class="footer-col footer-brand-col">
-                  <a href="index.html" class="footer-logo"><img src="${company.logo}" alt="${company.name}" width="1024" height="1024"></a>
+                  <a href="index.html" class="footer-logo"><img src="${company.logo}" alt="${company.name}" width="256" height="256"></a>
                   <p class="footer-brand-desc">${company.description}</p>
+                  <nav class="footer-social" aria-label="NIWASA social media">
+                    <a class="social-link social-instagram" href="https://www.instagram.com/niwasainteriors/" target="_blank" rel="noopener noreferrer" aria-label="NIWASA on Instagram" title="Instagram">
+                      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg>
+                    </a>
+                    <a class="social-link social-facebook" href="https://www.facebook.com/profile.php?id=61591849131222" target="_blank" rel="noopener noreferrer" aria-label="NIWASA on Facebook" title="Facebook">
+                      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M13.4 21v-8.2h2.8l.4-3.2h-3.2V7.5c0-.9.3-1.6 1.6-1.6h1.7V3.1c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.3H7.2v3.2H10V21h3.4Z"/></svg>
+                    </a>
+                    <a class="social-link social-youtube" href="https://www.youtube.com/@niwasainteriors" target="_blank" rel="noopener noreferrer" aria-label="NIWASA on YouTube" title="YouTube">
+                      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M23.2 7a3 3 0 0 0-2.1-2.1C19.2 4.4 12 4.4 12 4.4s-7.2 0-9.1.5A3 3 0 0 0 .8 7 31 31 0 0 0 .3 12a31 31 0 0 0 .5 5 3 3 0 0 0 2.1 2.1c1.9.5 9.1.5 9.1.5s7.2 0 9.1-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-5 31 31 0 0 0-.5-5ZM9.6 15.5v-7l6.2 3.5-6.2 3.5Z"/></svg>
+                    </a>
+                  </nav>
                 </div>
                 <div class="footer-col">
                   <h2 class="footer-heading">Quick Links</h2>
@@ -142,8 +153,7 @@
                     <div class="footer-contact-item"><a href="mailto:${company.email}">${company.email}</a></div>
                   </div>
                   <div class="footer-newsletter">
-                    <h3 class="newsletter-title">Design notes, by email</h3>
-                    <a href="mailto:${company.email}?subject=Design%20notes" class="newsletter-link">Ask us to share updates &rarr;</a>
+                    <a href="contact.html#consultation" class="newsletter-link">Book a design consultation &rarr;</a>
                   </div>
                 </div>
               </div>
